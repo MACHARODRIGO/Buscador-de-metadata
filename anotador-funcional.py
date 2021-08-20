@@ -1,6 +1,6 @@
 """1) Entrada"""
 
-"""Lectura de tabla de resultados de expresion diferencial"""
+"""Lectura de tabla de resultados de expresión diferencial"""
 
 import pandas as pd
 input = pd.read_table('week26_entrezgene.txt')
@@ -14,12 +14,10 @@ lista = [round(x) for x in lista]
 
 """ 2) Procesamiento"""
 
-#Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup (Adaptado 
+#Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup 
 
 #1.   Elemento de lista
 #2.   Elemento de lista
-
-#de: [https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/](https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/))
 
 """Selecciono una lista de proteinas a parsear"""
 
@@ -28,7 +26,7 @@ prots = lista[:25]
 import urllib
 from bs4 import BeautifulSoup
 
-#Defino una funcion que busca a partir del entrezgeneid, y obtiene el accesion number de UniProtKB
+#Defino una función que busca a partir del entrezgeneid, y obtiene el accesion number de UniProtKB
 def get_uniprot (query='',query_type='PDB_ID'):
     url = 'https://www.uniprot.org/uploadlists/' #Este es el webser para recuperar los datos de Uniprot
     params = {
