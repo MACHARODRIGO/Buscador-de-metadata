@@ -14,10 +14,10 @@ lista = [round(x) for x in lista]
 
 """ 2) Procesamiento"""
 
-Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup (Adaptado 
+#Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup (Adaptado 
 
-1.   Elemento de lista
-2.   Elemento de lista
+#1.   Elemento de lista
+#2.   Elemento de lista
 
 de: [https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/](https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/))
 
