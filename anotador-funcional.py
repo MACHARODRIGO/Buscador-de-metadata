@@ -19,7 +19,7 @@ lista = [round(x) for x in lista]
 #1.   Elemento de lista
 #2.   Elemento de lista
 
-de: [https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/](https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/))
+#de: [https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/](https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/))
 
 """Selecciono una lista de proteinas a parsear"""
 
