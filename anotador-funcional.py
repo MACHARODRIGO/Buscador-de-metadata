@@ -1,15 +1,6 @@
-pip install pandas
+"""1) Entrada"""
 
-pip install numpy
-
-pip install biopython
-
-pip install urllib3
-
-"""# **1) Entrada**
-
-Lectura de tabla de resultados de expresion diferencial
-"""
+"""Lectura de tabla de resultados de expresion diferencial"""
 
 import pandas as pd
 input = pd.read_table('week26_entrezgene.txt')
@@ -21,7 +12,7 @@ lista = input['Entrez_gene_ID'].tolist()
 lista = [x for x in lista if str(x) != 'nan']
 lista = [round(x) for x in lista]
 
-"""# **2) Procesamiento**
+""" 2) Procesamiento"""
 
 Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup (Adaptado 
 
@@ -29,9 +20,9 @@ Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup (Adapta
 2.   Elemento de lista
 
 de: [https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/](https://chem-workflows.com/articles/2019/10/29/retrieve-uniprot-data-using-python/))
-"""
 
-#Selecciono una lista de proteinas a parsear
+"""Selecciono una lista de proteinas a parsear"""
+
 prots = lista[:25]
 
 import urllib
@@ -81,8 +72,9 @@ for index,entry in enumerate(prots):
     #una fila en la table
     table.loc[index,'Entrez_gene_ID']=entry
     
-    #Para cada linea en la salida, busca la informacion de cada base de datos, reemplaza los caracteres separadores, y agrega esto a la lista correspondiente
-    #Agrega en la columna correspondiente la informacion contenida en la lista
+#Para cada linea en la salida, busca la informacion de cada base de datos, reemplaza los caracteres separadores, y agrega esto a la lista correspondiente
+#Agrega en la columna correspondiente la informacion contenida en la lista
+
     for line in data:
         if 'AC   ' in line:
             line=line.strip().replace('AC   ','').replace(';','')
@@ -138,7 +130,7 @@ with open('full_data_uni.json', 'w') as f:
 
 table
 
-"""# **3) Salida**"""
+""" 3) Salida  """
 
 merged = pd.merge(input, table, on='Entrez_gene_ID')
 merged["Entrez_gene_ID"] = merged["Entrez_gene_ID"].astype(int)
