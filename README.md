@@ -1,5 +1,4 @@
-# Buscador de metadata asociada a RNASeq
-
+# Buscador de metadata asociada a transcriptos
 Este herramienta para la búsqueda de metada asociada a secuenciaciones masivas está desarrollada en lenguaje Python. Para ejecutar el software es necesario contar con las siguientes librerías:
 
 Pandas --> https://pandas.pydata.org/
