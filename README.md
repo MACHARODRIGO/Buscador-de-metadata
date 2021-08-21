@@ -1,6 +1,6 @@
 # Anotador-funcional
 
-Este anotador funcional está desarrollado en lenguaje Python. Para la ejecutar el software confeccionado es necesario contar con las siguientes librerías:
+Este herramienta para la anotación funcional está desarrollada en lenguaje Python. Para ejecutar el software es necesario contar con las siguientes librerías:
 
 Pandas --> https://pandas.pydata.org/
 
@@ -10,7 +10,7 @@ Biopython --> https://biopython.org/
 
 Urllib3 --> https://urllib3.readthedocs.io/en/stable/
 
-Las versiones utilizadas fueron:
+Las versiones utilizadas para el desarrollo del mismo fueron:
 
 python 3.9.6
 
