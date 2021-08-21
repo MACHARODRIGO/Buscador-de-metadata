@@ -14,19 +14,19 @@ lista = [round(x) for x in lista]
 
 """ 2) Procesamiento"""
 
-#Acceso a UniProtKB con urllib y web scraping de pagina con BeautifulSoup 
+#Acceso a UniProtKB con urllib y web scraping con BeautifulSoup 
 
 #1.   Elemento de lista
 #2.   Elemento de lista
 
-"""Selecciono una lista de proteinas a parsear"""
+"""Selección de proteínas a parsear"""
 
 prots = lista[:25]
 
 import urllib
 from bs4 import BeautifulSoup
 
-#Defino una función que busca a partir del entrezgeneid, y obtiene el accesion number de UniProtKB
+#Búsqueda del número de acceso de UniProtKB a parter del entrezgeneid
 def get_uniprot (query='',query_type='PDB_ID'):
     url = 'https://www.uniprot.org/uploadlists/' #Este es el webser para recuperar los datos de Uniprot
     params = {
@@ -36,7 +36,7 @@ def get_uniprot (query='',query_type='PDB_ID'):
     'query':query
     }
 
-    #Devuelve la salida de la pagina
+    #Salida de la página
     data = urllib.parse.urlencode(params)
     data = data.encode('ascii') 
     request = urllib.request.Request(url, data)
@@ -46,13 +46,13 @@ def get_uniprot (query='',query_type='PDB_ID'):
         page=page.splitlines()
     return page
 
-#Crea un data frame y una lista donde voy a guardar la salida completa
+#Marco de datos y lista para almacenar la salida
 table=pd.DataFrame()
 full_data = []
 
-#Crea para cada proteina: 
+#Para cada proteína: 
 for index,entry in enumerate(prots):
-    #una lista con la informacion de cada base de datos
+    #generación de una lista con la informacion de cada base de datos,
     uni_id = []
     pdbs=[]
     functions=[]
@@ -63,15 +63,15 @@ for index,entry in enumerate(prots):
     pfam = []
     prosite = []
 
-    #busca en la base de datos 
+    #búsqueda en la base de datos, 
     data=get_uniprot(query=entry)
-    #apendea la salida a una lista
+    #incorporación en la lista,
     full_data.append(data)
-    #una fila en la table
+    #incorporación en la tabla.
     table.loc[index,'Entrez_gene_ID']=entry
     
-#Para cada linea en la salida, busca la informacion de cada base de datos, reemplaza los caracteres separadores, y agrega esto a la lista correspondiente
-#Agrega en la columna correspondiente la informacion contenida en la lista
+#Para cada línea en la salida: búsqueda de información de cada base de datos, reemplazo de caracteres separadores, e incorporación en la lista.
+#Adición en la columna correspondiente de la información contenida en la lista.
 
     for line in data:
         if 'AC   ' in line:
@@ -118,7 +118,7 @@ for index,entry in enumerate(prots):
                 process.append (line[1])
                 table.loc[index,'GO_process']=(", ".join(list(set(process))))
 
-"""Guardado de la salida en un archivo .json como respaldo, para posterior consulta sin necesidad de volver a acceder a UniProtKB"""
+"""Guardado de la salida en un archivo .json (disponible para consulta)"""
 
 import json
 with open('full_data_uni.json', 'w') as f:
