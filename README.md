@@ -1,4 +1,4 @@
-# Anotador-funcional
+# Buscador de metadata asociada a RNA-Seq
 
 Este herramienta para la anotación funcional está desarrollada en lenguaje Python. Para ejecutar el software es necesario contar con las siguientes librerías:
 
