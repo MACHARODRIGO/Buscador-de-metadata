@@ -2,13 +2,13 @@
 
 Este anotador funcional está desarrollado en lenguaje Python. Para la ejecutar el software confeccionado es necesario contar con las siguientes librerías:
 
-pip install pandas
+Pandas --> https://pandas.pydata.org/
 
-pip install numpy
+NumPy --> https://numpy.org/
 
-pip install biopython
+Biopython --> https://biopython.org/
 
-pip install urllib3
+Urllib3 --> https://urllib3.readthedocs.io/en/stable/
 
 Las versiones utilizadas fueron:
 
