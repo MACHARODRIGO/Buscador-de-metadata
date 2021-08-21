@@ -3,7 +3,7 @@
 """Lectura de tabla de resultados de expresión diferencial"""
 
 import pandas as pd
-input = pd.read_table('week26_entrezgene.txt')
+input = pd.read_table('entrada.txt')
 input.head()
 
 """Generación de lista con id entrezgene para el parseo de UniProtKB"""
