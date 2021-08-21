@@ -1,6 +1,6 @@
-# Buscador de metadata asociada a RNA-Seq
+# Buscador de metadata asociada a RNASeq
 
-Este herramienta para la anotación funcional está desarrollada en lenguaje Python. Para ejecutar el software es necesario contar con las siguientes librerías:
+Este herramienta para la búsqueda de metada asociada a secuenciaciones masivas está desarrollada en lenguaje Python. Para ejecutar el software es necesario contar con las siguientes librerías:
 
 Pandas --> https://pandas.pydata.org/
 
