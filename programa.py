@@ -16,9 +16,6 @@ lista = [round(x) for x in lista]
 
 #Acceso a UniProtKB con urllib y web scraping con BeautifulSoup 
 
-#1.   Elemento de lista
-#2.   Elemento de lista
-
 """Selección de proteínas a parsear"""
 
 prots = lista[:25]
