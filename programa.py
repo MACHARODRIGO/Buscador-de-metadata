@@ -6,24 +6,24 @@ import pandas as pd
 input = pd.read_table('entrada.txt')
 input.head()
 
-"""Generación de lista con id entrezgene para el parseo de UniProtKB"""
+""" 2) Pre-Procesamiento"""
+
+"""Extracción de lista con el entrezgeneid para el parseo de UniProtKB"""
 
 lista = input['Entrez_gene_ID'].tolist()
 lista = [x for x in lista if str(x) != 'nan']
 lista = [round(x) for x in lista]
 
-""" 2) Procesamiento"""
-
-#Acceso a UniProtKB con urllib y web scraping con BeautifulSoup 
 
 """Selección de proteínas a parsear"""
 
 prots = lista[:25]
 
+#Acceso a UniProtKB con urllib y web scraping con BeautifulSoup 
 import urllib
 from bs4 import BeautifulSoup
 
-#Búsqueda del número de acceso de UniProtKB a parter del entrezgeneid
+#Búsqueda del número de acceso de UniProtKB a partir del entrezgeneid
 def get_uniprot (query='',query_type='PDB_ID'):
     url = 'https://www.uniprot.org/uploadlists/' #Este es el webser para recuperar los datos de Uniprot
     params = {
@@ -43,7 +43,9 @@ def get_uniprot (query='',query_type='PDB_ID'):
         page=page.splitlines()
     return page
 
-#Marco de datos y lista para almacenar la salida
+""" 3) Procesamiento"""
+
+"""Extracción de lista con el entrezgeneid para el parseo de UniProtKB"""
 table=pd.DataFrame()
 full_data = []
 
@@ -125,7 +127,7 @@ with open('full_data_uni.json', 'w') as f:
 
 table
 
-""" 3) Salida  """
+""" 4) Salida  """
 
 merged = pd.merge(input, table, on='Entrez_gene_ID')
 merged["Entrez_gene_ID"] = merged["Entrez_gene_ID"].astype(int)
