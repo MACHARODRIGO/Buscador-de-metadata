@@ -25,7 +25,7 @@ from bs4 import BeautifulSoup
 
 #Búsqueda del número de acceso de UniProtKB a partir del entrezgeneid
 def get_uniprot (query='',query_type='PDB_ID'):
-    url = 'https://www.uniprot.org/uploadlists/' #Este es el webser para recuperar los datos de Uniprot
+    url = 'https://www.uniprot.org/uploadlists/' #Página web para recuperar los datos de Uniprot
     params = {
     'from':'P_ENTREZGENEID',
     'to':'ACC',
