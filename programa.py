@@ -1,57 +1,56 @@
-"""1) Entrada"""
+"""
+1) Input
+"""
 
-"""Lectura de tabla de resultados de expresión diferencial"""
+# Load differential expression results
 
 import pandas as pd
 input = pd.read_table('entrada.txt')
 input.head()
 
-""" 2) Pre-Procesamiento"""
+"""
+2) Pre-processing
+"""
 
-"""Extracción de lista con el entrezgeneid para el parseo de UniProtKB"""
-
-lista = input['Entrez_gene_ID'].tolist()
+# Extract GeneID (CICLE_v1000xxxxmg), which is the valid gene identifier for Citrus clementina.
+# The previous EntrezGeneID column is no longer usable for UniProt mapping.
+lista = input['GeneID'].tolist()
 lista = [x for x in lista if str(x) != 'nan']
-lista = [round(x) for x in lista]
 
-
-"""Selección de proteínas a parsear"""
-
+# Select a subset of genes to query (recommended <100 to avoid server overload)
 prots = lista[:25]
 
-#Acceso a UniProtKB con urllib y web scraping con BeautifulSoup 
-import urllib
-from bs4 import BeautifulSoup
+"""
+UniProt access using REST API
+"""
 
-#Búsqueda del número de acceso de UniProtKB a partir del entrezgeneid
-def get_uniprot (query='',query_type='PDB_ID'):
-    url = 'https://www.uniprot.org/uploadlists/' #Página web para recuperar los datos de Uniprot
+import requests
+
+# Query UniProtKB using the REST API.
+# Web scraping and the old 'uploadlists' endpoint are no longer supported.
+def get_uniprot(query=''):
+    url = "https://rest.uniprot.org/uniprotkb/search"
     params = {
-    'from':'P_ENTREZGENEID',
-    'to':'ACC',
-    'format':'txt',
-    'query':query
+        "query": f"(gene_exact:{query})",   # Exact match for EnsemblGenome/Phytozome gene IDs
+        "format": "txt"                     # Returns plain text compatible with the existing parser
     }
 
-    #Salida de la página
-    data = urllib.parse.urlencode(params)
-    data = data.encode('ascii') 
-    request = urllib.request.Request(url, data)
-    with urllib.request.urlopen(request) as response:
-        res = response.read()
-        page=BeautifulSoup(res, "lxml").get_text()
-        page=page.splitlines()
-    return page
+    r = requests.get(url, params=params)
+    r.raise_for_status()
 
-""" 3) Procesamiento"""
+    return r.text.splitlines()
 
-"""Extracción de lista con el entrezgeneid para el parseo de UniProtKB"""
+
+"""
+3) Processing
+"""
+
 table=pd.DataFrame()
 full_data = []
 
-#Para cada proteína: 
+# For each gene, parse UniProtKB text output
 for index,entry in enumerate(prots):
-    #generación de una lista con la informacion de cada base de datos,
+    # Containers for parsed annotations
     uni_id = []
     pdbs=[]
     functions=[]
@@ -62,15 +61,15 @@ for index,entry in enumerate(prots):
     pfam = []
     prosite = []
 
-    #búsqueda en la base de datos, 
+    # Query UniProtKB for the gene
     data=get_uniprot(query=entry)
-    #incorporación en la lista,
+    # Append the data to the full_data list
     full_data.append(data)
-    #incorporación en la tabla.
-    table.loc[index,'Entrez_gene_ID']=entry
+    # Add the gene ID to the table
+    table.loc[index,'GeneID'] = entry
     
-#Para cada línea en la salida: búsqueda de información de cada base de datos, reemplazo de caracteres separadores, e incorporación en la lista.
-#Adición en la columna correspondiente de la información contenida en la lista.
+#For each line in the output: search for information from each database, replace separator characters, and incorporate into the list.
+#Addition to the corresponding column of the information contained in the list.
 
     for line in data:
         if 'AC   ' in line:
@@ -117,20 +116,24 @@ for index,entry in enumerate(prots):
                 process.append (line[1])
                 table.loc[index,'GO_process']=(", ".join(list(set(process))))
 
-"""Guardado de la salida en un archivo .json (disponible para consulta)"""
+"""
+4) Save full raw UniProt output
+"""
 
 import json
 with open('full_data_uni.json', 'w') as f:
     f.write(json.dumps(full_data))
 
-"""Visualización de la tabla"""
+#Visualization of the table
 
 table
 
-""" 4) Salida  """
 
-merged = pd.merge(input, table, on='Entrez_gene_ID')
-merged["Entrez_gene_ID"] = merged["Entrez_gene_ID"].astype(int)
+"""
+5) Output table
+"""
+
+merged = pd.merge(input, table, on='GeneID')
 merged
 
-merged.to_csv("output.csv")
+merged.to_csv("output.csv", index=False)
