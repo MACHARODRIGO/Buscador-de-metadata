@@ -1,8 +1,3 @@
----
-title: "🧬 Transcript Metadata Finder – Python Tool 🔎🐍"
-output: github_document
----
-
 # 🧬 Transcript Metadata Finder – Python Tool 🔎🐍
 
 Tool for retrieving **functional and structural metadata** associated with transcript IDs from *Citrus clementina* using the **UniProt REST API**.  
